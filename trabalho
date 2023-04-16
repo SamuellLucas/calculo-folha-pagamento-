@@ -1,0 +1,332 @@
+mport java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+
+        String nome = ""; //variavel que armazena o nome do funcionário
+        String cargoF = ""; // variavel que armazena o cargo que o funcionario atua
+        String dataADMS = ""; //variavel que armazena a data de adimissão do funcionário
+
+        long cpf = 0L;  //variavel que armazena o cpf do funcionário
+
+        byte diasTsem = 0; //variavel que armazena quantos dias na semana o funcionário trabalha
+
+
+        double sBruto = 0.00; // variavel que armazena o salario bruto do funcionario
+        double sLiquido = 0.00; // variavel que armazena o salario liquido do funcionario
+        double sHora = 0.00; //variavel que armazena o quanto o funcionario ganhará por hora
+        double insalunridade = 0.00; //variavel que armazena o beneficio de Insalubridade
+        double periculosidade = 0.00; // variavel que armazena o valor adicional de periculosidade
+        double vTransporte = 0.00; // variavel para fazer if else de calculo de vale transporte
+        double vTransporteInf = 0.00; //variavel que armazena vale transporte com desconto inferior a 6% do salario bruto do funcionário
+        double vTransporteSup = 0.00;//variavel que armazena vale transporte com desconto superior a 6% do salario bruto do funcionário
+        double vAlimentacao = 0.00; //variavel que armazena beneficio de vale alimentalção
+        double INSS = 0.00; // variavel que armazena a porcentagem de INSS
+        double FGTS = 0.00; // variavel que armazena o valor que o funcionário deve receber de FGTS
+        double sIRRF = 0.00; //varialvel que armazena o salario base de IRRF
+        double bdcIRRF = 0.00; // variavel que armazena a base d calculo de IRRF
+        double IRRF = 0.00; // varialvel que armazena o valor total do IRRF
+
+        boolean INSS1 = (sBruto <= 1302.00); // variavel que armazena o INSS de primeira faixa
+        boolean INSS2 = (sBruto >= 1302.01) && (sBruto <= 2571.29); // variavel que armazena o INSS de segunda faixa
+        boolean INSS3 = (sBruto >= 2571.30) && (sBruto <= 3856.94);// variavel que armazena o INSS de terceira faixa
+        boolean INSS4 = (sBruto >= 3856.95) && (sBruto <= 7507.49); // variavel que armazena o INSS de quarta faixa
+
+        int horasTmes = 0; // variavel que armazena horas trabalhadas no mês pelo funcionário
+        int horasTDia = 0; // variavel que armazena horas trabalhadas no dia pelo funcionario
+        int horasTsem = 0; // variavel que armazena horas trabalhadas na semana pelo funcionário
+        int mes = 0; //variavel para fazer switch case do mês
+        int GrauDeRisco = 0; // variavel que armazena grau de risco de insalubridade
+        int diasTmes = 0; //varialvel que armazena quantos dias no mês o funcionário trabalhou
+
+        System.out.println("CADASTRO DO FUNCIONÁRIO!");
+
+        System.out.println("Digite o nome completo do funcionário: ");
+        nome = console.nextLine();
+
+        System.out.println("Qual a data de admissão do funcionário? Digite no formato (yyyy-MM-dd)");
+        dataADMS = console.nextLine();
+
+        System.out.println("Qual o cargo que o funcionário tem na empresa: ");
+        cargoF = console.nextLine();
+
+        System.out.println("Digite o CPF do funcionário : ");
+        cpf = console.nextLong();
+
+        System.out.println("Cadastro concluido!");
+
+        System.out.println(
+                " \n\n Indique o mês em que deseja fazer a folha de pagamento: (Indique de acordo ao número em que o mês representa no ano. Ex: janeiro = 1.)");
+        mes = console.nextInt();
+        switch (mes) {
+            case 1:
+                System.out.println("Mês de janeiro escolhido");
+                break;
+            case 2:
+                System.out.println("Mês de fevereiro escolhido");
+                break;
+            case 3:
+                System.out.println("Mês de março escolhido");
+                break;
+            case 4:
+                System.out.println("Mês de abril escolhido");
+                break;
+            case 5:
+                System.out.println("Mês de maio escolhido");
+                break;
+            case 6:
+                System.out.println("Mês de junho escolhido");
+                break;
+            case 7:
+                System.out.println("Mês de julho escolhido");
+                break;
+            case 8:
+                System.out.println("Mês de agosto escolhido");
+                break;
+            case 9:
+                System.out.println("Mês de setembro escolhido");
+                break;
+            case 10:
+                System.out.println("Mês de outubro escolhido");
+                break;
+            case 11:
+                System.out.println("Mês de novembro escolhido");
+                break;
+            case 12:
+                System.out.println("Mês de dezembro escolhido");
+                break;
+            default:
+                System.out.println("Mês inválido");
+                break;
+        }
+
+        // Inicio da folha de pagamento
+        System.out.println("\n\nINICIO DA FOLHA DE PAGAMENT0! ");
+
+        System.out.println(" Qual o salario bruto do funcionário? ");
+        sBruto = console.nextDouble();
+
+        System.out.println("Quantas horas o funcionário trabalha por dia?");
+        horasTDia = console.nextInt();
+
+        System.out.println("Quantos dias o funcionário trabalhou na semana?");
+        diasTsem = console.nextByte();
+
+        diasTmes = (diasTsem * 4);
+        System.out.println("O funcionário trabalhou " + diasTmes + " dias no mês");
+
+        horasTsem = (horasTDia * diasTsem);
+        horasTmes = (horasTsem * 4);
+
+        System.out.println("O funcionário trabalhou " + horasTsem + " horas na semana e " + horasTmes + " horas no mês.");
+
+        // calculo de pericolisidade
+
+        System.out.println(" \n\n ANÁLISE DE PERICULOSIDADE!");
+
+        System.out.println("O funcionário deverá ter um adicional de periculosidade de 30% do salario bruto.");
+
+        // calculo de insalubridade
+        System.out.println("\n\nANÁLISE DE INSALUBRIDADE!");
+
+        System.out.println(
+                "Indique o grau de risco da insalubbridade.\n Digite (40) para grau de risco alto.\n Digite (20) para grau de risco médio. \n Digite (10) para grau de risco baixo. ");
+        GrauDeRisco = console.nextInt();
+
+        switch (GrauDeRisco) {
+            case 40:
+                System.out.println("Grau de risco alto de insalubridade indicado. \n\nO funcionário deverá receber um beneficio de 40% a mais de seu salario bruto.");
+                System.setOut(System.out);
+                break;
+            case 20:
+                System.out.println("Grau de risco médio de insalubridade indicado.\n\n O funcionário deverá receber um beneficio de 20% a mais de seu salario bruto");
+                System.setOut(System.out);
+                break;
+            case 10:
+
+                System.out.println("Grau de risco baixo de insalubridade indicado.\n\n O funcionário deverá receber um beneficio de 10% a mais de seu salario bruto.");
+                System.setOut(System.out);
+                break;
+            default:
+                System.out.println("Opção que foi indicada, está inválida");
+                break;
+        }
+
+        //calculo de vale transporte
+        System.out.println("\n\nCÁLCULO DE VALE TRANSPORTE!");
+
+        System.out.println("Qual o valor de vale transporte o funcionário tem direito?");
+        vTransporte = console.nextDouble();
+        if (vTransporte < (sBruto * 0.06)) {
+            System.out.println("O valor de desconto do vale transporte indicado, foi inferior a 6% do salario bruto do funcionario. Então o funcionário deverá receber somente o valor de desconto indicado.");
+            System.setOut(System.out);
+        } else if (vTransporte >= (sBruto * 0.06)) {
+            System.out.println("O valor de desconto do vale transporte indicado, foi superior a 6% do salario bruto do funcionario. Então o funcionário deverá receber 6% descontado de seu salario bruto.");
+            System.setOut(System.out);
+        }
+
+        // calculo de vale alimentação
+        System.out.println("\n\nCÁLCULO DE VALE ALIMENTAÇÃO!");
+        System.out.println("Qual o valor de vale alimentação a impresa fornece?");
+        vAlimentacao = console.nextDouble();
+
+        //IRRF
+       //calculo de salario base IRRF
+        if (INSS1) {
+            sIRRF = (sBruto - (sBruto * 0.075));
+        } else if (INSS2) {
+            sIRRF = (sBruto - (sBruto * 0.09));
+        } else if (INSS3) {
+            sIRRF = (sBruto - (sBruto * 0.12));
+        } else if (INSS4) {
+            sIRRF = (sBruto - (sBruto * 0.14));
+        } else {
+            sIRRF = (sBruto - 877.24);
+        }
+
+       // base de calculo IRRF
+        bdcIRRF = (sIRRF - 189.59);
+
+       //calculo do valor total de IRRF
+        if (bdcIRRF <= 1903.98) {
+            IRRF = 0;
+        } else if (bdcIRRF <= 2826.65) {
+            IRRF = ((bdcIRRF * 0.075)- 142.80);
+        } else if (bdcIRRF <= 3751.05) {
+            IRRF = ((bdcIRRF * 0.15) - 354.80);
+        } else if (bdcIRRF <= 4664.68) {
+            IRRF = ((bdcIRRF * 0.225) - 636.13);
+        } else {
+            IRRF = ((bdcIRRF * 0.275) - 869.36);
+        }
+
+
+        //RELATORIO
+
+        System.out.println("\n\n RELATORIO");
+
+        System.out.println("Nome do funcionário: " +nome);
+
+        System.out.println("Data de admissão: " +dataADMS);
+
+        //mes de referência
+        switch (mes) {
+            case 1:
+                System.out.println("Mês de referência: Janeiro!");
+                break;
+            case 2:
+                System.out.println("Mês de referência: Fevereiro!");
+                break;
+            case 3:
+                System.out.println("Mês de referência: Março!");
+                break;
+            case 4:
+                System.out.println("Mês de referência: Abril!");
+                break;
+            case 5:
+                System.out.println("Mês de referência: Maio!");
+                break;
+            case 6:
+                System.out.println("Mês de referência: Junho!");
+                break;
+            case 7:
+                System.out.println("Mês de referência: Julho!");
+                break;
+            case 8:
+                System.out.println("Mês de referência: Agosto!");
+                break;
+            case 9:
+                System.out.println("Mês de referência: Setembro!");
+                break;
+            case 10:
+                System.out.println("Mês de referência: Outubro!");
+                break;
+            case 11:
+                System.out.println("Mês de referência: Novembro!");
+                break;
+            case 12:
+                System.out.println("Mês de referência: Dezembro!");
+                break;
+            default:
+                System.out.println("Mês de referência não identificado");
+                break;
+        }
+
+        System.out.println("Cargo do funcionário: " +cargoF);
+
+        //periculosidade
+
+            periculosidade = (sBruto * 30 / 100);
+            System.out.println("Beneficio de periculosidade: R$:" + periculosidade);
+
+
+        //insalubridade
+        if (GrauDeRisco == 40) {
+            insalunridade = (sBruto * 0.4);
+            System.out.println("Beneficio de insalubridade: R$:" + insalunridade);
+        } else if (GrauDeRisco == 20) {
+            insalunridade = (sBruto * 0.2);
+            System.out.println("Beneficio de insalubridade: R$:" + insalunridade);
+        } else if (GrauDeRisco == 10) {
+            insalunridade = (sBruto * 0.1);
+            System.out.println("Beneficio de insalubridade: R$:" + insalunridade);
+        } else {
+            System.out.println("Erro em calcular beneficio de insalubridade.");
+        }
+
+        //vale transporte
+        vTransporteInf = vTransporte;
+        vTransporteSup = (sBruto * 0.06);
+        if (vTransporte < sBruto * 0.06) {
+            System.out.println("Vale transporte R$:" + vTransporteInf);
+        } else if (vTransporte >= sBruto * 0.06) {
+            System.out.println("Vale transporte R$:" + vTransporteSup);
+        }
+
+        //vale alimetação
+
+        vAlimentacao = (vAlimentacao * diasTmes);
+        if (vAlimentacao == 1) {
+            System.out.println("Vale alimentação R$:" + vAlimentacao);
+        } else {
+            System.out.println("O funcionário não tem beneficio de vale alimentação");
+        }
+
+        //INSS
+
+        if (INSS1) {
+            System.out.println("INSS: R$:" + sBruto * 0.075);
+        } else if (INSS2) {
+            System.out.println("INSS: R$:" + sBruto * 0.09);
+        } else if (INSS3) {
+            System.out.println("INSS: R$:" + sBruto * 0.12);
+        } else if (INSS4) {
+            System.out.println("INSS: R$:" + sBruto * 0.14);
+        } else {
+            System.out.println("INSS: R$: R$:877,24");
+        }
+
+        //FGTS
+        FGTS = (sBruto * 0.08);
+        System.out.println("FGTS: R$:" +FGTS);
+
+        //IRRF
+        System.out.println("IRRF: R$:" +IRRF);
+
+
+        //salario bruto
+        System.out.println("Salario Bruto: R$:" + sBruto);
+
+        //salario por hora
+        sHora = (sBruto / horasTmes);
+        System.out.println("Salario por hora: R$:" + sHora);
+
+        //salario liquido
+        sLiquido = ((sBruto) - (IRRF + INSS + FGTS) - (vTransporte + vAlimentacao) + (periculosidade + insalunridade));
+        System.out.println("Salário Liquido: R$:" +sLiquido);
+
+
+    }
+}
+
